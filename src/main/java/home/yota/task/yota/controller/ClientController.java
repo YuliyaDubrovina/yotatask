@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class ClientController {
@@ -21,22 +22,21 @@ public class ClientController {
 
 
     @GetMapping(value = "/users")
-    public ResponseEntity<List<Client>> readAll() {
+    public ResponseEntity<?> readAll() {
         final List<Client> clients = clientService.readAll();
 
-        return clients != null &&  !clients.isEmpty()
+        return clients != null && !clients.isEmpty()
                 ? new ResponseEntity<>(clients, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                : new ResponseEntity<>("[]", HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/user/{username}")
-    public ResponseEntity<Client> read(@PathVariable(name = "id") int id) {
-        final Client client = clientService.read(id);
+    @GetMapping(value = "/users/{regExp}")
+    public ResponseEntity<?> read(@PathVariable String regExp) {
+        final List<Client> clients = clientService.read(regExp);
 
-
-        return client != null
-                ? new ResponseEntity<>(client, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return clients != null && !clients.isEmpty()
+                ? new ResponseEntity<>(clients, HttpStatus.OK)
+                : new ResponseEntity<>("[]", HttpStatus.NOT_FOUND);
     }
 
     @PutMapping(value = "/user")
@@ -49,12 +49,16 @@ public class ClientController {
                 : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @DeleteMapping(value = "/clients/{id}")
-    public ResponseEntity<?> delete(@PathVariable(name = "id") int id) {
-        final boolean deleted = clientService.delete(id);
+    @PostMapping(value = "/updatePassword")
+    public ResponseEntity<?> updatePassword(@RequestBody Map<String, String> request) {
+        System.out.printf(String.valueOf(request.keySet()));
 
-        return deleted
-                ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
+        String username = request.get("usrname");
+        String oldpassword = request.get("oldpassword");
+        String password = request.get("password");
+
+
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

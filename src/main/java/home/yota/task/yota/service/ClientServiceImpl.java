@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 public class ClientServiceImpl implements ClientService{
@@ -20,14 +22,21 @@ public class ClientServiceImpl implements ClientService{
 
     @Override
     public List<Client> readAll() {
-//        return new ArrayList<>(CLIENT_REPOSITORY.values());
         return CLIENTS_LIST;
     }
 
     @Override
-    public Client read(int id) {
-//        return CLIENT_REPOSITORY.get(id);
-        return new Client();
+    public List<Client> read(String regExp) {
+        List<Client> resultClientList = new ArrayList<>();
+        for (Client client : CLIENTS_LIST) {
+            String username = client.getUsername();
+            Pattern pattern = Pattern.compile(regExp);
+            Matcher matcher = pattern.matcher(username);
+            while (matcher.find()){
+                resultClientList.add(client);
+            }
+        }
+        return resultClientList;
     }
 
     @Override
@@ -40,8 +49,8 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public boolean delete(int id) {
-//        return CLIENT_REPOSITORY.remove(id) != null;
-        return true;
+    public boolean updatePassword(Client client) {
+
+        return false;
     }
 }

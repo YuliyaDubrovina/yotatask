@@ -16,10 +16,10 @@ public interface ClientService {
      */
     List<Client> readAll();
 
-    Client read(int id);
+    List<Client> read(String regExp);
 
     boolean update(Client client);
 
-    boolean delete(int id);
+    boolean updatePassword(Client client);
 
 }
