@@ -51,8 +51,10 @@ public class ClientController {
 
     @PostMapping(value = "/updatePassword")
     public ResponseEntity<?> updatePassword(@RequestBody Map<String, String> request) {
-        System.out.printf(String.valueOf(request.keySet()));
+        final boolean isUpdated = clientService.updatePassword(request);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return isUpdated
+                ? new ResponseEntity<>(HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
