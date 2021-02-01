@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,7 +50,14 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public boolean updatePassword(Client client) {
+    public boolean updatePassword(Map<String, String> request) {
+        String username = request.get("usrname");
+        String oldpassword = request.get("oldpassword");
+        String password = request.get("password");
+
+        Client client = new Client();
+        client.setUsername(username);
+        client.setPassword(oldpassword);
 
         return false;
     }

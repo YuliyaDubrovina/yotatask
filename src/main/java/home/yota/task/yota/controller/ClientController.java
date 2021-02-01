@@ -53,12 +53,6 @@ public class ClientController {
     public ResponseEntity<?> updatePassword(@RequestBody Map<String, String> request) {
         System.out.printf(String.valueOf(request.keySet()));
 
-        String username = request.get("usrname");
-        String oldpassword = request.get("oldpassword");
-        String password = request.get("password");
-
-
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
