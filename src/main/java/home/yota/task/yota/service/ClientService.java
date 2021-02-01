@@ -6,10 +6,10 @@ import java.util.Map;
 
 public interface ClientService {
     /**
-     * Создает нового клиента
-     * @param client - клиент для создания
+     * Складывает клиента в список для хранения.
+     * @param client - клиент для определения в список
      */
-    void create(Client client);
+    void putClientToList(Client client);
 
     /**
      * Возвращает список всех имеющихся клиентов

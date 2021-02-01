@@ -17,7 +17,7 @@ public class ClientServiceImpl implements ClientService{
 
 
     @Override
-    public void create(Client client) {
+    public void putClientToList(Client client) {
         CLIENTS_LIST.add(client);
     }
 
