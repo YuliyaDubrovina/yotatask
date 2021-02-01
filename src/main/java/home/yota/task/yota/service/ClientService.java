@@ -5,11 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 public interface ClientService {
-    /**
-     * Складывает клиента в список для хранения.
-     * @param client - клиент для определения в список
-     */
-    void putClientToList(Client client);
 
     /**
      * Возвращает список всех имеющихся клиентов
@@ -19,7 +14,12 @@ public interface ClientService {
 
     List<Client> read(String regExp);
 
-    boolean update(Client client);
+    /**
+     * Складывает клиента в список для хранения.
+     * @param client - клиент для определения в список
+     * @return
+     */
+    boolean putClientToList(Client client);
 
     boolean updatePassword(Map<String, String> request);
 

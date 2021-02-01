@@ -17,11 +17,6 @@ public class ClientServiceImpl implements ClientService{
 
 
     @Override
-    public void putClientToList(Client client) {
-        CLIENTS_LIST.add(client);
-    }
-
-    @Override
     public List<Client> readAll() {
         return CLIENTS_LIST;
     }
@@ -41,10 +36,15 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public boolean update(Client client) {
+    public boolean putClientToList(Client client) {
         if (client.getPassword().equals("") || client.getPassword() == null) {
             return false;
         }
+
+        for (Client existClient : CLIENTS_LIST) {
+            if (existClient.getUsername().equals(client.getUsername())) return false;
+        }
+
         CLIENTS_LIST.add(client);
         return true;
     }

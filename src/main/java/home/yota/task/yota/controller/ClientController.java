@@ -40,8 +40,8 @@ public class ClientController {
     }
 
     @PutMapping(value = "/user")
-    public ResponseEntity<?> update(@RequestBody Client client) {
-        final boolean isUpdated = clientService.update(client);
+    public ResponseEntity<?> putClientToList(@RequestBody Client client) {
+        final boolean isUpdated = clientService.putClientToList(client);
 
         //TODO Добавить вывод ошибки {"error":"description"}
         return isUpdated
