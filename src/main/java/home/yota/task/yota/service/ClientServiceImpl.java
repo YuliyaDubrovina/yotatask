@@ -55,10 +55,14 @@ public class ClientServiceImpl implements ClientService{
         String oldpassword = request.get("oldpassword");
         String password = request.get("password");
 
-        Client client = new Client();
-        client.setUsername(username);
-        client.setPassword(oldpassword);
+        for (Client client : CLIENTS_LIST) {
+            if (client.getUsername().equals(username) && client.getPassword().equals(oldpassword)) {
+                client.setPassword(password);
+                return true;
+            }
+        }
 
         return false;
     }
+
 }
