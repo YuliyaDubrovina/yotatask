@@ -50,9 +50,9 @@ public class ClientController {
 
     @PostMapping(value = "/updatePassword")
     public ResponseEntity<?> updatePassword(@RequestBody Map<String, String> request) {
-        final boolean isUpdated = clientService.updatePassword(request);
+        final String updateResult = clientService.updatePassword(request);
 
-        return isUpdated
+        return !updateResult.isEmpty() || updateResult.equals("")
                 ? new ResponseEntity<>(HttpStatus.OK)
                 : new ResponseEntity<>("{\"error\":\"Не удалось обновить пароль\"}", HttpStatus.INTERNAL_SERVER_ERROR);
     }

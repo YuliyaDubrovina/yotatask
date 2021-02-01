@@ -42,7 +42,7 @@ public class ClientServiceImpl implements ClientService{
         }
 
         for (Client existClient : CLIENTS_LIST) {
-            if (existClient.getUsername().equals(client.getUsername()))return "\"error\":\"Такой клиент уже существует.\"";
+            if (existClient.getUsername().equals(client.getUsername())) return "\"error\":\"Такой клиент уже существует.\"";
         }
 
         CLIENTS_LIST.add(client);
@@ -56,13 +56,13 @@ public class ClientServiceImpl implements ClientService{
         String password = request.get("password");
 
         for (Client client : CLIENTS_LIST) {
-            if (!client.getUsername().equals(username)) return "\"error\":\"Такой клиента не существует.\"";
-            if (!client.getPassword().equals(oldpassword))
-                return "\"error\":\"Заданные oldpasword не совпадает с паролем в системе.\"";
+            if (client.getUsername().equals(username)) {
+                if (client.getPassword().equals(oldpassword)) return "";
+                else return "\"error\":\"Заданные oldpasword не совпадает с паролем в системе.\"";
+            }
         }
 
-
-        return false;
+        return "\"error\":\"Такой клиента не существует.\"";
     }
 
 }
