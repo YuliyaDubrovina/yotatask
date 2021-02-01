@@ -51,7 +51,7 @@ public class ClientServiceImpl implements ClientService{
 
     @Override
     public boolean updatePassword(Map<String, String> request) {
-        String username = request.get("usrname");
+        String username = request.get("username");
         String oldpassword = request.get("oldpassword");
         String password = request.get("password");
 
