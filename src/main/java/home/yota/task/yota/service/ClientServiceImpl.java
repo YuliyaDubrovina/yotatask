@@ -36,31 +36,31 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    public boolean putClientToList(Client client) {
+    public String putClientToList(Client client) {
         if (client.getPassword().equals("") || client.getPassword() == null) {
-            return false;
+            return "\"error\":\"Пароль не задан или пустой\"";
         }
 
         for (Client existClient : CLIENTS_LIST) {
-            if (existClient.getUsername().equals(client.getUsername())) return false;
+            if (existClient.getUsername().equals(client.getUsername()))return "\"error\":\"Такой клиент уже существует.\"";
         }
 
         CLIENTS_LIST.add(client);
-        return true;
+        return "";
     }
 
     @Override
-    public boolean updatePassword(Map<String, String> request) {
+    public String updatePassword(Map<String, String> request) {
         String username = request.get("username");
         String oldpassword = request.get("oldpassword");
         String password = request.get("password");
 
         for (Client client : CLIENTS_LIST) {
-            if (client.getUsername().equals(username) && client.getPassword().equals(oldpassword)) {
-                client.setPassword(password);
-                return true;
-            }
+            if (!client.getUsername().equals(username)) return "\"error\":\"Такой клиента не существует.\"";
+            if (!client.getPassword().equals(oldpassword))
+                return "\"error\":\"Заданные oldpasword не совпадает с паролем в системе.\"";
         }
+
 
         return false;
     }

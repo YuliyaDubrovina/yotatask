@@ -41,12 +41,11 @@ public class ClientController {
 
     @PutMapping(value = "/user")
     public ResponseEntity<?> putClientToList(@RequestBody Client client) {
-        final boolean isUpdated = clientService.putClientToList(client);
+        final String updateResult = clientService.putClientToList(client);
 
-        //TODO Добавить вывод ошибки {"error":"description"}
-        return isUpdated
+        return !updateResult.isEmpty() || updateResult.equals("")
                 ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                : new ResponseEntity<>(updateResult, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @PostMapping(value = "/updatePassword")
@@ -55,6 +54,6 @@ public class ClientController {
 
         return isUpdated
                 ? new ResponseEntity<>(HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+                : new ResponseEntity<>("{\"error\":\"Не удалось обновить пароль\"}", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

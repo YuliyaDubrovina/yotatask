@@ -19,8 +19,8 @@ public interface ClientService {
      * @param client - клиент для определения в список
      * @return
      */
-    boolean putClientToList(Client client);
+    String putClientToList(Client client);
 
-    boolean updatePassword(Map<String, String> request);
+    String updatePassword(Map<String, String> request);
 
 }
