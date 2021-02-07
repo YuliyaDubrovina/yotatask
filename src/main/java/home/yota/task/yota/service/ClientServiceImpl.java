@@ -57,7 +57,10 @@ public class ClientServiceImpl implements ClientService{
 
         for (Client client : CLIENTS_LIST) {
             if (client.getUsername().equals(username)) {
-                if (client.getPassword().equals(oldpassword)) return "";
+                if (client.getPassword().equals(oldpassword)) {
+                    client.setPassword(password);
+                    return "";
+                }
                 else return "\"error\":\"Заданные oldpasword не совпадает с паролем в системе.\"";
             }
         }
