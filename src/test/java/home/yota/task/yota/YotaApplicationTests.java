@@ -9,10 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SpringBootTest
 public class YotaApplicationTests {
@@ -55,8 +52,16 @@ public class YotaApplicationTests {
 
 
         Assert.assertEquals(HttpStatus.OK, clientController.updatePassword(request).getStatusCode());
-        ArrayList<Client> clients = (ArrayList<Client>) clientController.readAll().getBody();
-        Assert.assertEquals("password1_new", clients.get(0).getPassword());
+
+        Object resultBody = clientController.readAll().getBody();
+        if (resultBody instanceof List<?>) {
+            List<?> clients = new ArrayList<>((Collection<?>) resultBody);
+            for (Object resultClient : clients){
+                if (resultClient instanceof Client) {
+                    Assert.assertEquals("password1_new", ((Client) resultClient).getPassword());
+                }
+            }
+        }
     }
 
     @Test
@@ -73,13 +78,19 @@ public class YotaApplicationTests {
         clientController.putClientToList(client1);
         clientController.putClientToList(client2);
 
-        ResponseEntity responseEntity = clientController.read("mustbefind");
+        ResponseEntity<?> responseEntity = clientController.read("mustbefind");
         HttpStatus httpStatus = responseEntity.getStatusCode();
-        ArrayList<Client> resultClients = (ArrayList<Client>) responseEntity.getBody();
 
         Assert.assertEquals(HttpStatus.OK, httpStatus);
-        for (Client client : resultClients) {
-            Assert.assertEquals("mustbefind", client.getUsername());
+
+        Object resultBody = responseEntity.getBody();
+        if (resultBody instanceof List<?>) {
+            List<?> clients = new ArrayList<>((Collection<?>) resultBody);
+            for (Object client : clients){
+                if (client instanceof Client) {
+                    Assert.assertEquals("mustbefind", ((Client) client).getUsername());
+                }
+            }
         }
     }
 }
